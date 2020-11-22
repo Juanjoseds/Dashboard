@@ -1,16 +1,37 @@
 const mix = require('laravel-mix');
+const exec = require('child_process').exec;
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
+require('dotenv').config();
+require('laravel-mix-purgecss');
+const glob = require('glob')
+const path = require('path')
+const purge = true;
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .sourceMaps();
+function mixAssetsDir(query, cb) {
+    (glob.sync('resources/' + query) || []).forEach(f => {
+        f = f.replace(/[\\\/]+/g, '/');
+        cb(f, f.replace('resources', 'public'));
+    });
+}
+
+const sassOptions = {
+    sourceMap: true,
+};
+
+// plugins Core stylesheets
+mixAssetsDir('sass/pages/**/!(_)*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), sassOptions).purgeCss({enabled: purge,}));
+// script js
+mixAssetsDir('js/scripts/**/*.js', (src, dest) => mix.scripts(src, dest));
+mixAssetsDir('js/**/*.js', (src, dest) => mix.scripts(src, dest));
+
+/* VENDOR */
+/*mixAssetsDir('vendors/js/!**!/!*.js', (src, dest) => mix.scripts(src, dest));
+mixAssetsDir('vendors/css/!**!/!*.css', (src, dest) => mix.copy(src, dest).purgeCss({
+    enabled: purge,
+}));*/
+
+mix.sass('resources/sass/app.scss', 'public/css')
+    .purgeCss({
+    enabled: purge,
+});
+

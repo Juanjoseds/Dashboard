@@ -7,10 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
     @yield('styles')
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link href = {{ asset("bootstrap/css/bootstrap.css") }} rel="stylesheet" />
 </head>
 <body>
     @yield('content')
     @yield('javascript')
-    <script src="{{asset('js/bootstrap.js')}}"></script>
+    <script src="{{asset('js/app.js')}}"></script>
 </body>
 </html>
