@@ -14,11 +14,11 @@ function mixAssetsDir(query, cb) {
 }
 
 const sassOptions = {
-    sourceMap: true,
+
 };
 
 // plugins Core stylesheets
-mixAssetsDir('sass/pages/**/!(_)*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), sassOptions).purgeCss());
+mixAssetsDir('sass/pages/**/!(_)*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), sassOptions).purgeCss({enabled: purge,}));
 // script js
 mixAssetsDir('js/scripts/**/*.js', (src, dest) => mix.scripts(src, dest));
 mixAssetsDir('js/**/*.js', (src, dest) => mix.scripts(src, dest));
