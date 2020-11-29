@@ -3,7 +3,7 @@
 @section('title', 'Dashboard Pro')
 
 @section('styles')
-    <link rel="stylesheet" href="{{asset('css/pages/Home/header.css')}}">
+    <link rel="stylesheet" href="{{asset('css/pages/Home/home.css')}}">
 @endsection
 
 @section('content')

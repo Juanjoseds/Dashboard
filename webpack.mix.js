@@ -4,7 +4,6 @@ const exec = require('child_process').exec;
 require('dotenv').config();
 require('laravel-mix-purgecss');
 const glob = require('glob')
-const path = require('path')
 const purge = true;
 
 function mixAssetsDir(query, cb) {
@@ -19,7 +18,7 @@ const sassOptions = {
 };
 
 // plugins Core stylesheets
-mixAssetsDir('sass/pages/**/!(_)*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), sassOptions).purgeCss({enabled: purge,}));
+mixAssetsDir('sass/pages/**/!(_)*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), sassOptions).purgeCss());
 // script js
 mixAssetsDir('js/scripts/**/*.js', (src, dest) => mix.scripts(src, dest));
 mixAssetsDir('js/**/*.js', (src, dest) => mix.scripts(src, dest));
